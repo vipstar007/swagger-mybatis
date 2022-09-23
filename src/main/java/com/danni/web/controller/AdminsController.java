@@ -14,7 +14,8 @@ import com.danni.model.entity.Admins;
 import com.danni.model.service.AdminsService;
 import com.danni.utils.JsonResult;
 
-import io.swagger.annotations.ApiOperation;
+
+import io.swagger.v3.oas.annotations.Operation;
 
 //@RestController注解表示这个类是一个controller。它里面包含了@ResponseBody，因此在下面的方法上不需要进行@ResponseBody声明了
 @RestController
@@ -24,7 +25,7 @@ public class AdminsController {
 	@Autowired
 	private AdminsService adminsService;
 
-	@ApiOperation("登录")
+	@Operation(summary = "Đăng nhập", description = "Đăng nhập")
 	@RequestMapping(value = "login", method = RequestMethod.PUT) // @RequestMapping注解:value属性表示映射的路径,method属性用来表示请求的方式
 	private JsonResult login(@RequestBody Admins admins) { // @RequestBody表示需要传递的json值
 		Admins resultAdmin = adminsService.login(admins);
@@ -39,8 +40,8 @@ public class AdminsController {
 		return jsonResult;
 	}
 
-	@ApiOperation("添加")
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@Operation(summary = "Thêm vào", description = "Thêm vào")
+	@RequestMapping(value = "add", method = RequestMethod.POST)
 	private JsonResult add(@RequestBody Admins admins) {
 		Integer row = adminsService.add(admins);
 
@@ -53,10 +54,11 @@ public class AdminsController {
 		return jsonResult;
 	}
 
-	@ApiOperation("根据id删除信息")
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-	private JsonResult delete(@PathVariable Integer id) { // 删除的时候不需要传递json数据,但是需要有参数id，因此用
-															// @PathVariable注解参数
+	@Operation(summary = "Xóa thông tin theo id", description = "Xóa thông tin theo id")
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+	private JsonResult delete(@PathVariable Integer id) { 
+		// There is no need to pass json data when deleting, but the parameter id is required, so use
+		// @PathVariable annotation parameter
 		Integer row = adminsService.delete(id);
 
 		JsonResult jsonResult = new JsonResult();
@@ -68,8 +70,8 @@ public class AdminsController {
 		return jsonResult;
 	}
 
-	@ApiOperation("根据id更新信息")
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
+	@Operation(summary = "Cập nhật thông tin dựa trên id", description = "Cập nhật thông tin dựa trên id")
+	@RequestMapping(value = "update/{id}", method = RequestMethod.PUT)
 	private JsonResult update(@RequestBody Admins admins, @PathVariable Integer id) {
 		Integer row = adminsService.update(admins);
 
@@ -82,8 +84,8 @@ public class AdminsController {
 		return jsonResult;
 	}
 
-	@ApiOperation("根据id查询信息")
-	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@Operation(summary = "Truy vấn thông tin theo id", description = "Truy vấn thông tin theo id")
+	@RequestMapping(value = "getBy/{id}", method = RequestMethod.GET)
 	private JsonResult queryById(@PathVariable Integer id) {
 		Admins admins = adminsService.queryById(id);
 
@@ -97,8 +99,8 @@ public class AdminsController {
 		return jsonResult;
 	}
 
-	@ApiOperation("查询所有")
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@Operation(summary = "Truy vấn tất cả", description = "Truy vấn tất cả")
+	@RequestMapping(value = "getall", method = RequestMethod.GET)
 	private JsonResult queryAll() {
 		List<Admins> adminLists = adminsService.queryAll();
 

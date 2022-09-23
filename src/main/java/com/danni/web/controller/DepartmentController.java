@@ -13,16 +13,16 @@ import com.danni.model.entity.Department;
 import com.danni.model.service.DepartmentService;
 import com.danni.utils.JsonResult;
 
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping(value = "dep")
+@RequestMapping(value = "/api/dep")
 public class DepartmentController {
 
 	@Autowired
 	private DepartmentService departmentService;
 
-	@ApiOperation("添加")
+	@Operation(summary = "Thêm vào", description = "Thêm vào")
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	private JsonResult add(@RequestBody Department department) {
 		Integer row = departmentService.add(department);
@@ -36,7 +36,7 @@ public class DepartmentController {
 		return jsonResult;
 	}
 
-	@ApiOperation("根据id删除信息")
+	@Operation(summary = "Xóa thông tin theo id", description = "Xóa thông tin theo id")
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	private JsonResult delete(@PathVariable Integer id) { // 删除的时候不需要传递json数据,但是需要有参数id，因此用
 															// @PathVariable注解参数
@@ -51,7 +51,7 @@ public class DepartmentController {
 		return jsonResult;
 	}
 
-	@ApiOperation("根据id更新信息")
+	@Operation(summary = "Cập nhật thông tin dựa trên id", description = "Cập nhật thông tin dựa trên id")
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	private JsonResult update(@RequestBody Department department, @PathVariable Integer id) {
 		Integer row = departmentService.update(department);
@@ -64,8 +64,7 @@ public class DepartmentController {
 
 		return jsonResult;
 	}
-
-	@ApiOperation("根据id查询信息")
+	@Operation(summary = "Truy vấn thông tin theo id", description = "Truy vấn thông tin theo id")
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	private JsonResult queryById(@PathVariable Integer id) {
 		Department department = departmentService.queryById(id);
@@ -80,7 +79,7 @@ public class DepartmentController {
 		return jsonResult;
 	}
 
-	@ApiOperation("查询所有")
+	@Operation(summary = "Truy vấn tất cả", description = "Truy vấn tất cả")
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	private JsonResult queryAll() {
 		List<Department> departLists = departmentService.queryAll();
